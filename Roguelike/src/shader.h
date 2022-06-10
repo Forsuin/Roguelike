@@ -1,11 +1,13 @@
 #pragma once
+#include <string>
+
+
 namespace yarl {
 
 	enum class ShaderType {
 		VERTEX,
 		FRAGMENT,
-		GEOMETRY,
-		COMPUTE
+		GEOMETRY
 	};
 
 	class Shader {
@@ -13,6 +15,7 @@ namespace yarl {
 		//shader program ID
 		unsigned int ID;
 
+		Shader();
 		void add(const std::string& path, ShaderType type);
 		void use();
 		void setBool(const std::string& name, bool value) const;

@@ -17,7 +17,6 @@ void processInput(GLFWwindow* window) {
 }
 
 int main() {
-
 	float vertices[] = {
 		 0.5f,  0.5f, 0.0f,
 		 0.5f, -0.5f, 0.0f,
@@ -59,7 +58,9 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
-	//yarl::Shader shader("resources/shaders/shader.vs", "resources/shaders/shader.fs");
+	yarl::Shader shader;
+	shader.add("resources/shaders/shader.vs", yarl::ShaderType::VERTEX);
+	shader.add("resources/shaders/shader.fs", yarl::ShaderType::FRAGMENT);
 	
 
 	unsigned int vertexBuffer, vertexArray, elementBuffer;
@@ -110,7 +111,7 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//shader.use();
+		shader.use();
 		glBindVertexArray(vertexArray);
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
