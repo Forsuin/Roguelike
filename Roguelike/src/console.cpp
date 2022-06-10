@@ -10,9 +10,9 @@ void yarl::console::set(int x, int y, const tile_t& to)
 	tiles[getIndex(x, y)] = to;
 }
 
-void yarl::console::clear(const tile_t& to = defaultTile)
+void yarl::console::clear(const tile_t& to)
 {
-	for (auto t : tiles) {
+	for (auto& t : tiles) {
 		t = to;
 	}
 }

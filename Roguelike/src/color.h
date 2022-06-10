@@ -17,7 +17,7 @@ namespace yarl {
 
 		color_t(const uint8_t r, const uint8_t g, const uint8_t b) : r(r), g(g), b(b) {}
 
-		constexpr color_t operator+(const color_t& rhs) const {
+		color_t operator+(const color_t& rhs) const {
 			int red = r + rhs.r;
 			int green = g + rhs.g;
 			int blue = b + rhs.b;
@@ -27,17 +27,17 @@ namespace yarl {
 			return { red, green, blue };
 		}
 
-		constexpr color_t operator+(const int rhs) const {
+		color_t operator+(const int rhs) const {
 			int red = r + rhs;
 			int green = r + rhs;
 			int blue = r + rhs;
 			if (red > 255) red = 255;
 			if (green > 255) green = 255;
-			if (blue > 255) blue - 255;
+			if (blue > 255) blue = 255;
 			return { red, green, blue };
 		}
 
-		constexpr color_t operator-(const color_t& rhs) const {
+		color_t operator-(const color_t& rhs) const {
 			int red = r - rhs.r;
 			int green = g - rhs.g;
 			int blue = b - rhs.b;
@@ -47,7 +47,7 @@ namespace yarl {
 			return { red, green, blue };
 		}
 
-		constexpr color_t operator-(const int rhs) const {
+		color_t operator-(const int rhs) const {
 			int red = r - rhs;
 			int green = g - rhs;
 			int blue = b - rhs;
