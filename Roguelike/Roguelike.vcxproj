@@ -179,6 +179,7 @@
     <None Include="resources\shaders\shader.vs" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resources\textures\awesomeface.png" />
     <Image Include="resources\textures\container.jpg" />
     <Image Include="resources\textures\wall.jpg" />
   </ItemGroup>
