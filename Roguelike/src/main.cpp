@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "shader.h"
+#include "texture.h"
 #include "stb_image.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -83,50 +84,20 @@ int main() {
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
-	//generate texture
-	unsigned int texture1, texture2;
 
-	glGenTextures(1, &texture1);
-	glBindTexture(GL_TEXTURE_2D, texture1);
+	yarl::Texture texture1("resources/textures/container.jpg", yarl::TextureFormat::RGB);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	texture1.setTextureParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+	texture1.setTextureParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+	texture1.setTextureParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	texture1.setTextureParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	stbi_set_flip_vertically_on_load(true);
+	yarl::Texture texture2("resources/textures/awesomeface.png", yarl::TextureFormat::RGBA);
 
-	//load image
-	int width, height, numChannels;
-	unsigned char* data = stbi_load("resources/textures/container.jpg", &width, &height, &numChannels, 0);
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else {
-		std::cout << "Failed to load texture" << std::endl;
-	}
-
-	stbi_image_free(data);
-
-	glGenTextures(1, &texture2);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	data = stbi_load("resources/textures/awesomeface.png", &width, &height, &numChannels, 0);
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else {
-		std::cout << "Failed to load texture" << std::endl;
-	}
-
-	stbi_image_free(data);
+	texture1.setTextureParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+	texture1.setTextureParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+	texture1.setTextureParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	texture1.setTextureParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	shader.use();
 	shader.setInt("texture1", 0);
@@ -139,10 +110,8 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture1);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);
+		texture1.setActive(yarl::TextureSlot::TEXTURE0);
+		texture2.setActive(yarl::TextureSlot::TEXTURE1);
 
 		shader.use();
 		glBindVertexArray(vertexArray);
